@@ -1,0 +1,8 @@
+How to list branches that contain a given commit?
+  --> git branch --contains <commit> # only local branches
+  --> git branch -r --contains <commit>  # across local and remote branches.
+
+List all commits in the current branch that are not in the remote branch.
+  --> git cherry -v
+
+
