@@ -10,3 +10,7 @@ For a given file, find what commits were added to master relative to your branch
 
 Change author:
   --> git commit --amend --author="Author Name <email@address.com>"
+  
+Show git root directory
+  --> git rev-parse --show-toplevel
+
