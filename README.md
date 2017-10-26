@@ -33,3 +33,34 @@ git commit --amend --author="<Author Name> <email@address.com>"
 ```bash
 git rev-parse --show-toplevel
 ```
+
+## Certificate generation
+- Generate a keystore using the Java keytool
+```bash
+keytool -genkey -alias server -keyalg RSA -keysize 2048 -keystore cloud.jks
+```
+- Generate a certificate request
+```bash
+keytool -certreq -alias server -file cloud.csr.txt -keystore cloud.jks
+```
+- Import one or all entries from another keystore
+```bash
+keytool -importkeystore -srckeystore cloud.jks -destkeystore cloud.pkcs -srcstoretype JKS  -deststoretype PKCS12
+```
+- Generate a PEM from a pkcs12 formatted file
+```bash
+openssl pkcs12 -in cloud.pkcs -out cloud.pem
+```
+- Reveal the private key from the PEM file
+```bash
+openssl rsa -in cloud.pem -out cloud.key
+```
+- Generate a certificate from the certificate request and private key
+```bash
+openssl x509 -req -days 365 -in cloud.csr.txt -signkey cloud.key -out cloud.crt
+```
+- Convert CRT to PEM format
+```bash
+openssl x509 -in cloud.crt -out cloud.pem -outform PEM
+```
+
