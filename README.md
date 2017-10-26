@@ -33,6 +33,32 @@ git commit --amend --author="<Author Name> <email@address.com>"
 ```bash
 git rev-parse --show-toplevel
 ```
+## Bash
+- Check if stdin, stdout or stderr is attached to a terminal
+```bash
+# File descriptors for stdin, stdout and stderr are 0, 1 and 2 respectively.
+# The bash builtin `-t` takes one of the above file descriptors and returns
+# true if the descriptor is attached to a terminal and false otherwise. The
+# following checks if stdout is attached to a terminal.
+$ [ -t 1 ] && echo "Yes" || echo "No"
+Yes
+$ ([ -t 1 ] && echo "Yes" || echo "No") | cat
+No
+```
+- Check if a given function or alias exists
+```bash
+# Bash builtin `type` determines if a given identifier is a function or an
+# alias. For example, let's define a function `bar` and an alias `baz`
+$ function bar() {
+> echo "i am a bar function"
+> }
+$ alias baz='bar'
+# Now, let's use the `type` builtin to determine the type of `bar` and `baz`
+$ type -t bar
+function
+$ type -t baz
+alias
+```
 
 ## Certificate generation
 - Generate a keystore using the Java keytool
@@ -63,4 +89,3 @@ openssl x509 -req -days 365 -in cloud.csr.txt -signkey cloud.key -out cloud.crt
 ```bash
 openssl x509 -in cloud.crt -out cloud.pem -outform PEM
 ```
-
